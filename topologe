@@ -1,0 +1,51 @@
+#include <stdio.h>
+
+int main() {
+    int n, count = 0;
+    int c[10][10], indeg[10], flag[10];
+    int i, j, k;
+
+    printf("Enter the number of vertices: ");
+    scanf("%d", &n);
+
+    
+    for (i = 0; i < n; i++) {
+        indeg[i] = 0;
+        flag[i] = 0;
+    }
+
+    printf("Enter the adjacency matrix (0 or 1 for each entry):\n");
+    for (i = 0; i < n; i++) {
+        for (j = 0; j < n; j++) {
+            scanf("%d", &c[i][j]);
+        }
+    }
+
+   
+    for (i = 0; i < n; i++) {
+        for (j = 0; j < n; j++) {
+            indeg[i] += c[j][i];
+        }
+    }
+
+    printf("The topological order is: ");
+    while (count < n) {
+        for (k = 0; k < n; k++) {
+            if (indeg[k] == 0 && flag[k] == 0) {
+                printf("%d ", k + 1);
+                flag[k] = 1;
+                count++;
+
+              
+                for (i = 0; i < n; i++) {
+                    if (c[k][i] == 1) {
+                        indeg[i]--;
+                    }
+                }
+            }
+        }
+    }
+    printf("\n");
+
+    return 0;
+}
